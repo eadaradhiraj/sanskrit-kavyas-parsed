@@ -127,8 +127,14 @@ h1 {
   font-size: 1.5rem;
   color: var(--accent-color);
   margin-bottom: 5px;
-  display: block;
+  display: inline-block; /* Allows wrapping within parent container */
+  width: 100%; /* Full width for block-like behavior */
+  overflow-wrap: break-word; /* Breaks long words if needed */
+  word-break: break-word; /* Cross-browser support for word breaking */
+  hyphens: auto; /* Adds hyphens where appropriate (Devanagari-aware) */
+  line-height: 1.4; /* Improves readability for wrapped lines */
 }
+
 
 .parsed-word {
   font-size: 0.9rem;
