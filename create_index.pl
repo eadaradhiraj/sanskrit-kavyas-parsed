@@ -1,12 +1,15 @@
-import os
+#!/usr/bin/perl
+use strict;
+use warnings;
+use File::Spec;
 
 # Configuration
-EXCLUDE_DIRS = {'.git', '.github', '__pycache__'}
-EXCLUDE_FILES = {'index.html', 'style.css', 'AI_instructions.MD', 'generate_index.py'}
-OUTPUT_FILE = 'index.html'
+my %EXCLUDE_DIRS  = map { $_ => 1 } qw(.git .github __pycache__);
+my %EXCLUDE_FILES = map { $_ => 1 } qw(index.html style.css AI_instructions.MD generate_index.py);
+my $OUTPUT_FILE   = 'index.html';
 
-def generate_html():
-    html_content = [
+sub generate_html {
+    my @html = (
         "<!DOCTYPE html>",
         "<html lang='en'>",
         "<head>",
@@ -21,7 +24,7 @@ def generate_html():
         "        details { margin-bottom: 8px; border: 1px solid #e1e4e8; border-radius: 6px; overflow: hidden; }",
         "        summary { padding: 12px; background: #f8f9fa; cursor: pointer; font-weight: 600; list-style: none; display: flex; align-items: center; transition: background 0.2s; }",
         "        summary:hover { background: #edf2f7; }",
-        "        summary::before { content: '▶'; margin-right: 12px; font-size: 0.8em; color: #7f8c8d; transition: transform 0.2s; }",
+        "        summary::before { content: '\\25B6'; margin-right: 12px; font-size: 0.8em; color: #7f8c8d; transition: transform 0.2s; }",
         "        details[open] summary::before { transform: rotate(90deg); }",
         "        ul { list-style: none; padding: 10px 0 10px 40px; margin: 0; background: #fff; }",
         "        li { margin: 6px 0; }",
@@ -33,37 +36,44 @@ def generate_html():
         "<body>",
         "<div class='container'>",
         "    <h1>Sanskrit Kavyas Parsed</h1>",
-        "    <p>Explore the collection below. Click a category to expand.</p>"
-    ]
+        "    <p>Explore the collection below. Click a category to expand.</p>",
+    );
 
-    # Get sorted list of directories
-    items = sorted(os.listdir('.'))
-    
-    for item in items:
-        if os.path.isdir(item) and item not in EXCLUDE_DIRS:
-            files = sorted([f for f in os.listdir(item) if f.endswith('.html')])
-            if not files:
-                continue
-            
-            html_content.append(f"    <details>")
-            html_content.append(f"        <summary>{item} <span class='count'>{len(files)} files</span></summary>")
-            html_content.append(f"        <ul>")
-            
-            for file in files:
-                file_path = f"{item}/{file}"
-                html_content.append(f"            <li><a href='{file_path}'>📄 {file}</a></li>")
-            
-            html_content.append(f"        </ul>")
-            html_content.append(f"    </details>")
+    opendir(my $dh, '.') or die "Cannot open current directory: $!";
+    my @items = sort grep { !$EXCLUDE_DIRS{$_} && -d $_ } readdir($dh);
+    closedir($dh);
 
-    html_content.append("</div>")
-    html_content.append("</body>")
-    html_content.append("</html>")
+    for my $item (@items) {
+        opendir(my $idh, $item) or next;
+        my @files = sort grep { /\.html$/ } readdir($idh);
+        closedir($idh);
 
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        f.write("\n".join(html_content))
-    
-    print(f"✅ Successfully generated {OUTPUT_FILE}")
+        next unless @files;
 
-if __name__ == "__main__":
-    generate_html()
+        my $count = scalar @files;
+        push @html, "    <details>";
+        push @html, "        <summary>$item <span class='count'>$count files</span></summary>";
+        push @html, "        <ul>";
+
+        for my $file (@files) {
+            my $file_path = "$item/$file";
+            push @html, "            <li><a href='$file_path'>&#x1F4C4; $file</a></li>";
+        }
+
+        push @html, "        </ul>";
+        push @html, "    </details>";
+    }
+
+    push @html, "</div>";
+    push @html, "</body>";
+    push @html, "</html>";
+
+    open(my $fh, '>:encoding(UTF-8)', $OUTPUT_FILE)
+        or die "Cannot open $OUTPUT_FILE for writing: $!";
+    print $fh join("\n", @html) . "\n";
+    close($fh);
+
+    print "Successfully generated $OUTPUT_FILE\n";
+}
+
+generate_html();
