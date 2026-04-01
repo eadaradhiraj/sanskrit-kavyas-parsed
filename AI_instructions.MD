@@ -25,7 +25,7 @@ Here are the rules and standards to be followed to generate HTML files:
 ### 4. Content & Analysis Requirements
 *   **Text Correction:** I must fix any typos, OCR errors, or Sandhi mistakes present in the source text (e.g., changing `तथेइति` to `तथेति`) for the display.
 *   **Padaccheda (Word Splitting):**
-    *   In the `.parsed-word` span, I must resolve Sandhi (e.g., `वागर्थाविव` $\to$ `वाक्-अर्थौ-इव`).
+    *   In the `.parsed-word` span, I must resolve Sandhi (e.g., `वागर्थाविव` $\to$ `वाक्-अर्थौ इव`).
 *   **Samasa (Compound) Analysis:**
     *   **Full Words:** I must **not** use ellipses (`...`) for long compound words in the word card; the full word must be displayed.
     *   **Vigraha Vakya:** Inside the `.grammar-box`, I must provide the step-by-step dissolution/breakdown of the compound.
