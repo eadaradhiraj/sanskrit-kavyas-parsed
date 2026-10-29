@@ -1,0 +1,1 @@
+https://archive.org/details/kPxP_bharat-manjari-of-kshemendra-by-kashinath-sharma-1898-nirnay-sagar-press/page/n409/mode/1up
