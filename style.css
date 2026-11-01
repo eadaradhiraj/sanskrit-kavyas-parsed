@@ -72,6 +72,30 @@ header {
   padding-bottom: 20px;
 }
 
+.index-link-top {
+  margin-bottom: 12px;
+}
+
+.index-link-top a {
+  display: inline-block;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  padding: 4px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  transition: all 0.2s ease;
+}
+
+.index-link-top a:hover {
+  background-color: var(--accent-color);
+  color: #ffffff;
+  border-color: var(--accent-color);
+}
+
 h1 {
   color: var(--accent-color);
   margin: 0;
