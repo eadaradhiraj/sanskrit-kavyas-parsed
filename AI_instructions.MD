@@ -123,7 +123,7 @@ The site references `../style.css`. The classes used in page generation include:
 * `.meaning` — Clear English translation of that token.
 * `.grammar-box` — Morphological details.
 * `.grammar-label` — Label spans (`Grammar`, `Samasa`, `Note`).
-* `.full-translation` — End box with complete English, Hindi, and Poetic/Dramatic context.
+* `.full-translation` — End box with complete English and Hindi translations.
 
 #### Complete `style.css`
 ```css
@@ -477,11 +477,10 @@ cat << 'EOF' > workname/1_1.html
 
     </div>
 
-    <div class="section-title">Translation &amp; Context</div>
+    <div class="section-title">Translation</div>
     <div class="full-translation">
       <p><strong>English Translation:</strong> Complete, contextually rich translation.</p>
       <p><strong>हिन्दी अनुवाद:</strong> सम्पूर्ण एवं स्पष्ट हिन्दी अनुवाद।</p>
-      <p><strong>काव्य/नाट्य-सन्दर्भः:</strong> Metre (छन्दस्), Figure of Speech (अलङ्कारः), and context.</p>
     </div>
   </div>
 </body>
